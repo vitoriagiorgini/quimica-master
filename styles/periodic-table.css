@@ -1,0 +1,47 @@
+/* ============ APRESENTAÇÃO — TABELA PERIÓDICA ============ */
+.container-tabela { 
+  overflow-x: auto; 
+  padding: 24px; 
+  background: #fff; 
+  border-radius: 1.5rem; 
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
+  border: 1px solid #f3f4f6;
+}
+.grade-periodica { display: grid; grid-template-columns: repeat(18, minmax(55px, 1fr)); gap: 6px; min-width: 1000px; }
+
+.elemento { 
+  border-radius: 0.75rem; 
+  padding: 8px; 
+  text-align: center; 
+  border: 1px solid rgba(0,0,0,0.05); 
+  min-height: 64px; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  cursor: pointer; 
+  transition: all 0.2s; 
+  position: relative;
+}
+.elemento:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); z-index: 10; color: #fff; border-color: transparent; }
+
+.elemento .numero { position: absolute; top: 4px; left: 6px; font-size: 0.625rem; opacity: 0.6; font-weight: 600; }
+.elemento .simbolo { font-family: var(--fonte-display); font-weight: 700; font-size: 1.25rem; }
+.elemento .nome, .elemento .massa { display: none; } /* Ocultos para ficar minimalista como o protótipo */
+
+/* Cores Tabela Protótipo */
+.cat-nao-metal { background: #f0fdf4; border-color: #bbf7d0; }
+.cat-nao-metal:hover { background: #4ade80; }
+
+.cat-gas-nobre { background: #eff6ff; border-color: #bfdbfe; }
+.cat-gas-nobre:hover { background: #60a5fa; }
+
+.cat-metal-alcalino { background: #fff7ed; border-color: #fed7aa; }
+.cat-metal-alcalino:hover { background: #fb923c; }
+
+.cat-metal-alcalinoterroso { background: #fefce8; border-color: #fef08a; }
+.cat-metal-alcalinoterroso:hover { background: #facc15; }
+
+.cat-semimetal, .cat-halogenio, .cat-metal { background: #f3f4f6; border-color: #e5e7eb; }
+.cat-semimetal:hover, .cat-halogenio:hover, .cat-metal:hover { background: #9ca3af; }
+
+.faixa-lantanideos { grid-column: 3 / 13; display: flex; align-items: center; justify-content: center; font-size: 0.875rem; color: #9ca3af; font-weight: 600; text-transform: uppercase; background: #f9fafb; border-radius: 0.75rem; border: 1px dashed #e5e7eb; letter-spacing: 0.05em; }

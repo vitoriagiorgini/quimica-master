@@ -1,0 +1,311 @@
+/* ============ APRESENTAÇÃO — PÁGINAS ============ */
+
+/* ========================================================= */
+/* 1. HERO (TÍTULO PRINCIPAL)                                */
+/* ========================================================= */
+.hero { 
+  text-align: left; 
+  max-width: 850px; 
+  margin: 0 0 48px 0; 
+}
+.hero h1 { 
+  font-size: clamp(2.4rem, 4.8vw, 3rem);  /* antes: clamp(2.4rem, 4.5vw, 3.3rem) */
+  font-weight: 650; 
+  line-height: 1.08; 
+  letter-spacing: -0.02em;
+  color: #1A202C; 
+  margin-bottom: 16px; 
+}
+.hero p { 
+  color: #4b5563; 
+  font-size: clamp(1rem, 1.5vw, 1.225rem); 
+  font-weight: 500; 
+  max-width: 600px;
+  line-height: 1.8; 
+}
+
+/* ========================================================= */
+/* 2. GRADE DE JOGOS (3 COLUNAS)                             */
+/* ========================================================= */
+.grade-jogos { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 24px; 
+  margin-bottom: 64px; 
+}
+
+@media (max-width: 1024px) {
+  .grade-jogos { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .grade-jogos { grid-template-columns: 1fr; }
+}
+
+/* ========================================================= */
+/* 3. CARTÃO DE JOGO                                         */
+/* ========================================================= */
+.cartao-jogo { 
+  position: relative; 
+  background: var(--cor-geral); 
+  border: 2px solid var(--borda-geral);
+  color: #000; 
+  border-radius: 1.5rem; 
+  padding: 32px 24px; 
+  display: flex; 
+  flex-direction: column; 
+  min-height: 300px;
+  box-shadow: var(--sombra); 
+  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  overflow: hidden;
+}
+.cartao-jogo:hover { 
+  transform: translateY(-5px); 
+  box-shadow: var(--sombra-forte); 
+}
+
+/* Cores dinâmicas dos cards */
+.cartao-jogo:nth-child(6n+1) { background: var(--cor-geral); border-color: var(--borda-geral); color: #000; }
+.cartao-jogo:nth-child(6n+2) { background: var(--cor-organica); border-color: var(--borda-organica); color: #fff; }
+.cartao-jogo:nth-child(6n+3) { background: var(--cor-fisico); border-color: var(--borda-fisico); color: #fff; }
+.cartao-jogo:nth-child(6n+4) { background: var(--cor-analitica); border-color: var(--borda-analitica); color: #000; }
+.cartao-jogo:nth-child(6n+5) { background: var(--cor-bio); border-color: var(--borda-bio); color: #fff; }
+.cartao-jogo:nth-child(6n+6) { background: var(--cor-ambiental); border-color: var(--borda-ambiental); color: #fff; }
+
+/* Adaptação para os cards escuros */
+.cartao-jogo:nth-child(6n+2) .chip, .cartao-jogo:nth-child(6n+3) .chip, .cartao-jogo:nth-child(6n+5) .chip, .cartao-jogo:nth-child(6n+6) .chip { background: rgba(255,255,255,0.2); }
+.cartao-jogo:nth-child(6n+2) .donut, .cartao-jogo:nth-child(6n+3) .donut, .cartao-jogo:nth-child(6n+5) .donut, .cartao-jogo:nth-child(6n+6) .donut { border-color: rgba(255,255,255,0.3); border-top-color: #fff; }
+.cartao-jogo:nth-child(6n+2) .botao-jogar, .cartao-jogo:nth-child(6n+3) .botao-jogar, .cartao-jogo:nth-child(6n+5) .botao-jogar, .cartao-jogo:nth-child(6n+6) .botao-jogar { background: #fff; color: #000; }
+
+.cartao-jogo h2 { 
+  font-size: 1.75rem; 
+  font-weight: 700; 
+  line-height: 1.1; 
+  margin-bottom: 24px; 
+  padding-right: 50px; 
+  letter-spacing: -0.03em;
+}
+
+/* Ícone fixo no canto superior direito */
+.icone-area { 
+  position: absolute; 
+  top: 32px; 
+  right: 24px; 
+  width: 36px; 
+  height: 36px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  opacity: 0.3; 
+  transition: transform 0.3s; 
+}
+.icone-area svg, .icone-area i { 
+  width: 100% !important; 
+  height: 100% !important; 
+  font-size: 36px !important; 
+}
+.cartao-jogo:hover .icone-area { transform: scale(1.1) rotate(5deg); }
+
+.cartao-jogo .nome-jogo { font-size: 0.875rem; font-weight: 500; opacity: 0.9; margin-bottom: 24px; }
+
+/* Metadados (Tipo de Jogo / Dificuldade) */
+.meta { display: flex; gap: 40px; font-size: 0.75rem; margin-bottom: 24px; }
+.meta > div { display: flex; flex-direction: column; gap: 4px; }
+.meta span:first-child { font-size: 0.75rem; opacity: 0.8; }
+.meta span:last-child { font-size: 0.95rem; font-weight: 700; }
+
+.topicos { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+
+.rodape-cartao { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.1); }
+.cartao-jogo:nth-child(6n+2) .rodape-cartao, .cartao-jogo:nth-child(6n+3) .rodape-cartao, .cartao-jogo:nth-child(6n+5) .rodape-cartao, .cartao-jogo:nth-child(6n+6) .rodape-cartao { border-top-color: rgba(255,255,255,0.2); }
+
+.pontuacao-linha { display: flex; align-items: center; font-size: 0.875rem; font-weight: 600; }
+
+/* ========================================================= */
+/* 4. SEÇÃO DE PONTUAÇÃO                                     */
+/* ========================================================= */
+.secao-pontuacao h2 { font-size: 1.5rem; margin-bottom: 24px; }
+.barra-xp { background: #dcfce7; border: 1px solid #bbf7d0; color: #1f2937; border-radius: 999px; padding: 16px 24px; font-weight: 700; font-size: 0.875rem; margin-bottom: 24px; }
+.colunas-pontuacao { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+.painel-pontos { border-radius: 1rem; padding: 24px; border: 1px solid transparent; }
+.painel-pontos.fortes { background: #86efac; border-color: #4ade80; }
+.painel-pontos.melhorar { background: #fca5a5; border-color: #f87171; }
+.painel-pontos h3 { font-weight: 700; margin-bottom: 20px; color: #111827; }
+.item-ponto { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-weight: 500; color: #1f2937; }
+.item-ponto::before { content: "•"; color: inherit; font-weight: bold; }
+
+/* ========================================================= */
+/* 5. REPORTAGENS E SITES                                    */
+/* ========================================================= */
+.grade-reportagens { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 24px; 
+}
+@media (max-width: 1024px) { .grade-reportagens { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 768px)  { .grade-reportagens { grid-template-columns: 1fr; } }
+
+.cartao-reportagem { 
+  background: #fff; 
+  border-radius: 1.5rem; 
+  border: 1px solid #f3f4f6; 
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
+  transition: all 0.3s; 
+  display: flex; 
+  flex-direction: column; 
+  padding: 24px; 
+}
+.cartao-reportagem:hover { transform: translateY(-4px); box-shadow: 0 12px 20px -5px rgba(0,0,0,0.1); }
+
+.fonte-label { 
+  display: inline-flex; align-items: center; gap: 8px;
+  color: #007A99; 
+  font-family: var(--fonte-texto);
+  font-size: 0.75rem; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+  letter-spacing: 0.05em; 
+  margin-bottom: 16px; 
+}
+.fonte-label svg { width: 16px; height: 16px; }
+
+.cartao-reportagem h2 { 
+  font-family: var(--fonte-display);   /* letra da sua plataforma */
+  font-size: 1.25rem; 
+  font-weight: 700; 
+  color: #111827; 
+  line-height: 1.3;
+  margin-bottom: 12px; 
+}
+.cartao-reportagem p { 
+  font-family: var(--fonte-texto);     /* letra da sua plataforma */
+  font-size: 0.875rem; 
+  color: #4b5563; 
+  line-height: 1.6;
+  margin-bottom: 20px; 
+}
+
+.botao-reportagem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Separa o texto do ícone */
+  width: 100%; /* Ocupa toda a largura disponível */
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px; /* Cantos levemente arredondados em vez de 999px */
+  padding: 12px 16px; /* Ajuste no preenchimento interno */
+  color: #111827;
+  font-family: var(--fonte-texto);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin-top: auto;
+  transition: background 0.2s;
+}
+
+.botao-reportagem:hover { 
+  background: #f1f5f9; 
+}
+
+.botao-reportagem svg {
+  width: 18px !important;
+  height: 18px !important;
+  flex: none;
+  color: #111827; /* Garante que a cor do ícone combine com o texto */
+}
+
+/* ============ AJUSTE: diminuir o negrito dos cards ============ */
+.cartao-jogo h2 { font-weight: 600; }                     /* título da matéria */
+.cartao-jogo .meta span:last-child { font-weight: 600; }  /* valores: Quiz, Fácil... */
+.cartao-jogo .chip { font-weight: 500; }                  /* chips de tópicos */
+.pontuacao-linha { font-weight: 500; }                    /* Sua Pontuação: 85% */
+.botao-jogar { font-weight: 600; }                        /* botão Jogar Agora */
+
+/* ========================================================= */
+/* CABEÇALHO E NAVEGAÇÃO FIXA                                */
+/* ========================================================= */
+
+.cabecalho {
+  position: sticky; /* Fixa no topo */
+  top: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Sombra leve */
+}
+
+.cabecalho-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+}
+
+/* --- Estilo da Logo --- */
+.cabecalho .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--fonte-display, sans-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  text-decoration: none;
+}
+
+/* Fundo azul quadrado no ícone do frasco da logo */
+.cabecalho .logo svg {
+  background-color: #0284c7; 
+  color: #ffffff;
+  padding: 6px;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+}
+
+/* --- Estilo da Navegação e Botões --- */
+.navegacao {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.navegacao a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  color: #4b5563; /* Cinza escuro */
+  font-family: var(--fonte-texto, sans-serif);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid transparent; /* Evita pulo no layout ao ativar borda */
+  transition: all 0.2s ease;
+}
+
+.navegacao a svg {
+  width: 18px;
+  height: 18px;
+  color: #6b7280; /* Ícone cinza padrão */
+}
+
+.navegacao a:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+/* --- Estado Ativo (Ex: Tabela Periódica selecionada) --- */
+.navegacao a.ativo {
+  background-color: #f0f9ff; /* Azul bem clarinho */
+  color: #0284c7; /* Texto azul */
+  border: 1px solid #bae6fd; /* Borda azul clara */
+}
+
+.navegacao a.ativo svg {
+  color: #0284c7; /* Ícone azul */
+}
