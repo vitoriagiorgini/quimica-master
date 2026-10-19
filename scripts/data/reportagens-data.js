@@ -127,7 +127,28 @@
       url: 'https://www.scielo.br/j/rmat/a/WSjQg33Qg76Vr9xkPpBbfYd/',
       imagem: 'assets/img/grama-sintetica-polimeros.jpg'
     },
-
+     
+   {
+      id: 'papel-vegetal-latex-substitui-plastico',
+      tema: 'materiais-e-polimeros',
+      rotuloMenu: 'Papel vegetal impermeável com látex',
+      titulo: 'Cientistas brasileiros criam papel vegetal que pode substituir o plástico em embalagens',
+      resumo: 'Pesquisadores do CNPEM, Unicamp e UFABC desenvolveram um material que unifica nanocelulose e látex natural. O resultado é um papel resistente, reciclável, impermeável e com propriedades antibacterianas para substituir embalagens plásticas.',
+      fonte: 'G1 / Ciência',
+      url: 'https://g1.globo.com/ciencia/noticia/2025/10/16/cientistas-brasileiros-criam-papel-vegetal-impermeavel-antibacteriano-e-que-pode-substituir-plastico.ghtml',
+      imagem: 'assets/img/papel-latex-bioplastico.jpg'
+    },
+    {
+      id: 'novo-plastico-resistentissimo-ao-calor',
+      tema: 'materiais-e-polimeros',
+      rotuloMenu: 'Novo polímero hiper-resistente',
+      titulo: 'Pesquisadores criam novo tipo de plástico capaz de suportar quatro vezes mais energia',
+      resumo: 'Ao combinar PEI (polieterimida) e PBODA, cientistas desenvolveram uma liga polimérica ultrarresistente que suporta temperaturas de -64°C a 250°C, permitindo criar capacitores e eletrônicos muito mais compactos e eficientes.',
+      fonte: 'G1 / Ciência',
+      url: 'https://g1.globo.com/ciencia/noticia/2026/02/23/pesquisadores-criam-novo-tipo-de-plastico-capaz-de-suportar-quatro-vezes-mais-energia.ghtml',
+      imagem: 'assets/img/novo-polimero-resistente.jpg'
+    },
+     
     {
       id: 'quimica-no-prato',
       tema: 'quimica-de-alimentos',
