@@ -30,7 +30,32 @@
   };
 
   QM.dados.jogos = [
-    { id: 'impostor', titulo: 'Encontre o Impostor', materia: 'Química Geral', topicos: ['Famílias químicas', 'Classificação dos elementos'], dificuldade: 'Médio', descricao: 'Analise grupos de elementos e identifique qual deles não pertence ao conjunto, justificando pela estrutura eletrônica e pelas propriedades periódicas.', rota: '#/jogo/impostor' },
-    { id: 'balanceamento', titulo: 'Balanceamento de Equações', materia: 'Química Geral / Estequiometria', topicos: ['Leis das reações', 'Coeficientes estequiométricos'], dificuldade: 'Médio-avançado', descricao: 'Ajuste os coeficientes das equações químicas até conservar o número de átomos de cada elemento entre reagentes e produtos.', rota: '#/jogo/balanceamento' }
+    { 
+      id: 'impostor', 
+      titulo: 'Encontre o Impostor', 
+      materia: 'Química Geral', 
+      topicos: ['Famílias químicas', 'Classificação dos elementos'], 
+      dificuldade: 'Médio', 
+      descricao: 'Analise grupos de elementos e identifique qual deles não pertence ao conjunto, justificando pela estrutura eletrônica e pelas propriedades periódicas.', 
+      rota: '#/jogo/impostor' 
+    },
+    { 
+      id: 'balanceamento', 
+      titulo: 'Balanceamento de Equações', 
+      materia: 'Química Geral / Estequiometria', 
+      topicos: ['Leis das reações', 'Coeficientes estequiométricos'], 
+      dificuldade: 'Médio-avançado', 
+      descricao: 'Ajuste os coeficientes das equações químicas até conservar o número de átomos de cada elemento entre reagentes e produtos.', 
+      rota: '#/jogo/balanceamento' 
+    },
+    { 
+      id: 'organica', 
+      titulo: 'Desafio de Química Orgânica', 
+      materia: 'Química Orgânica', 
+      topicos: ['Funções orgânicas', 'Cadeias carbônicas', 'Nomenclatura IUPAC'], 
+      dificuldade: 'Médio', 
+      descricao: 'Identifique funções orgânicas, estruturas de cadeias carbônicas e a nomenclatura IUPAC correta de diversos compostos.', 
+      rota: '#/jogo/organica' 
+    }
   ];
 })(window.QM = window.QM || {});

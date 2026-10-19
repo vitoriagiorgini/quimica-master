@@ -13,14 +13,18 @@
 
   function resolver(hash) {
     if (rotas[hash]) return rotas[hash]();
+    
+    /* Captura rotas no padrão #/jogo/id (ex: #/jogo/impostor, #/jogo/balanceamento, #/jogo/organica) */
     var partida = hash.match(/^#\/jogo\/([\w-]+)$/);
     if (partida) {
       var jogo = QM.app.obterJogo(partida[1]);
       if (jogo) return jogo.render();
     }
+    
     /* #/sites-e-reportagens/:tema  e  #/sites-e-reportagens/:tema/:id */
     var reportagem = hash.match(/^#\/sites-e-reportagens\/([\w-]+)(?:\/([\w-]+))?$/);
     if (reportagem) return QM.ui.viewReportagens(reportagem[1], reportagem[2]);
+    
     return '<div class="container"><h1>Página não encontrada</h1>' +
            '<p><a href="#/">Voltar ao catálogo de jogos</a></p></div>';
   }
