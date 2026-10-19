@@ -95,9 +95,10 @@
       var classeBotao = c.texto === 'claro' ? ' claro' : '';
       var topicos = c.topicos.map(function (t) { return '<span class="chip">' + t + '</span>'; }).join('');
       var dica = c.dica ? '<span class="chip-dica">' + c.dica + '</span>' : '';
-      var donut = c.pontuacaoDemo
-        ? '<div class="pontuacao-linha"><span class="donut" style="--pct:' + c.pontuacaoDemo + '"></span>Sua Pontuação: ' + c.pontuacaoDemo + '%</div>'
-        : '';
+      var progresso = c.id ? QM.app.obterProgressoJogo(c.id) : null;
+      var donut = c.id
+        ? '<div class="qm-pontuacao-real">' + (progresso ? 'Melhor partida: <strong>' + progresso.melhorPercentual + '% de acertos</strong>' : 'Jogue para registrar seu primeiro resultado') + '</div>'
+        : (c.pontuacaoDemo ? '<div class="pontuacao-linha"><span class="donut" style="--pct:' + c.pontuacaoDemo + '"></span>Exemplo: ' + c.pontuacaoDemo + '%</div>' : '');
       var acao = c.rota
         ? '<a class="botao-jogar' + classeBotao + '" href="' + c.rota + '">Jogar Agora</a>'
         : '<span class="botao-jogar' + classeBotao + ' em-breve">Em breve</span>';
@@ -121,7 +122,8 @@
 
     var secaoPontuacao =
       '<section class="secao-pontuacao">' +
-        '<h2>Sua Pontuação e Pontos de Melhoria</h2>' +
+        '<h2>Exemplo de painel de desempenho</h2>' +
+        '<p>Este painel usa dados demonstrativos. Seus resultados reais aparecem nos cartões de Nomeie a Molécula e Desafio da Entalpia.</p>' +
         '<div class="barra-xp">' + painel.xp + '</div>' +
         '<div class="colunas-pontuacao">' +
           '<div class="painel-pontos fortes"><h3>(Pontos Fortes)</h3>' + painel.fortes.map(itemPonto).join('') + '</div>' +
@@ -295,15 +297,16 @@
       '<div class="legenda-periodica" aria-label="Legenda de categorias">' + legenda + '</div>';
   };
 
-  /* ---- View: documentação (conteúdo inalterado) ---- */
+  /* ---- View: documentação e situação dos jogos ---- */
   QM.ui.viewDocumentacao = function () {
     return '<div class="doc">' +
       '<h1 class="hero" style="font-size:1.8rem">Documentação</h1>' +
       '<section><h2>Visão do projeto</h2><p>Plataforma educacional de jogos de Química em HTML, CSS e JavaScript puros, sem build e sem backend. Abra o <code>index.html</code> com duplo clique.</p></section>' +
+      '<section><h2>Nomeie a Molécula e Desafio da Entalpia</h2><p>Os dois jogos possuem 24 questões cada, três níveis de dificuldade e partidas de seis desafios. Cada acerto vale 100 pontos; com dica, 70. Após responder, confira a explicação e, ao terminar, revise sua partida. Os recordes ficam salvos neste navegador quando o armazenamento está disponível.</p></section>' +
       '<section><h2>Arquitetura em camadas</h2><ul>' +
         '<li><strong>Dados</strong> (<code>scripts/data/</code>): catálogo, reportagens, elementos e painel de pontuação.</li>' +
         '<li><strong>Domínio</strong> (<code>scripts/domain/</code>): contrato de jogo e validação.</li>' +
-        '<li><strong>Aplicação</strong> (<code>scripts/application/</code>): registro central e serviços de consulta.</li>' +
+        '<li><strong>Aplicação</strong> (<code>scripts/application/</code>): registro central, serviços de consulta e progresso dos jogos.</li>' +
         '<li><strong>Apresentação</strong> (<code>scripts/presentation/</code>): roteador, layout e views.</li>' +
         '<li><strong>Jogos</strong> (<code>scripts/games/</code>): módulos independentes registrados na plataforma.</li></ul>' +
         '<p>Regra de dependência: Dados → Domínio → Aplicação → Jogos → Apresentação.</p></section>' +
@@ -314,8 +317,8 @@
         '<li>Para o card do catálogo, adicione a entrada em <code>scripts/data/jogos-data.js</code> com a <code>rota</code>.</li></ol></section>' +
       '<section><h2>Como adicionar reportagens</h2><ol><li>Objeto novo em <code>scripts/data/reportagens-data.js</code> com id, tema (chave de <code>temasReportagens</code>), título, resumo, fonte e URL verificada.</li></ol></section>' +
       '<section><h2>Como adicionar elementos</h2><ol><li>Objeto novo em <code>scripts/data/elementos-data.js</code> com número, símbolo, nome, massa, grupo, período e categoria.</li></ol></section>' +
-      '<section><h2>Uso offline e distribuição</h2><p>Tudo funciona sem internet, exceto a fonte display (degrada para fonte do sistema) e os links externos. Pendrive: copie a pasta inteira.</p></section>' +
-      '<section><h2>Testes e pendências</h2><p>Implementado: navegação, catálogo visual do protótipo, páginas dos 2 jogos (estrutura), 4 reportagens verificadas, tabela dos períodos 1–3. Pendente: mecânicas, 118 elementos, busca e filtros.</p></section>' +
+      '<section><h2>Uso offline e distribuição</h2><p>As partidas, as estruturas químicas e os diagramas funcionam sem internet. Fontes externas usam alternativas do sistema quando a conexão não está disponível. Os links de estudo e das reportagens exigem internet. Para levar a plataforma em um pendrive, copie a pasta inteira.</p></section>' +
+      '<section><h2>Recursos e próximas etapas</h2><p>Nomeie a Molécula e Desafio da Entalpia possuem partidas, dicas, correção, resultados e revisão. A plataforma também oferece reportagens com busca por assunto e uma tabela periódica com os 18 elementos dos períodos 1–3. Os demais jogos continuam nas etapas de desenvolvimento do grupo. O painel global de desempenho contém dados demonstrativos; os recordes reais desses dois jogos aparecem nos respectivos cartões.</p></section>' +
       '</div>';
   };
 })(window.QM = window.QM || {});
