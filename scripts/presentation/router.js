@@ -13,15 +13,17 @@
 
   function resolver(hash) {
     if (rotas[hash]) return rotas[hash]();
-    
-    /* Captura rotas no padrão #/jogo/id (ex: #/jogo/impostor, #/jogo/balanceamento, #/jogo/organica) */
+
+    /* Captura rotas dinâmicas no padrão #/jogo/id (ex: #/jogo/impostor, #/jogo/quimica-ambiental, #/jogo/nomeie-molecula, #/jogo/desafio-entalpia) */
     var partida = hash.match(/^#\/jogo\/([\w-]+)$/);
     if (partida) {
-      var jogo = QM.app.obterJogo(partida[1]);
-      if (jogo) return jogo.render();
+      var jogo = QM.app && QM.app.obterJogo ? QM.app.obterJogo(partida[1]) : null;
+      if (jogo && typeof jogo.render === 'function') {
+        return jogo.render();
+      }
     }
     
-    /* #/sites-e-reportagens/:tema  e  #/sites-e-reportagens/:tema/:id */
+    /* #/sites-e-reportagens/:tema e #/sites-e-reportagens/:tema/:id */
     var reportagem = hash.match(/^#\/sites-e-reportagens\/([\w-]+)(?:\/([\w-]+))?$/);
     if (reportagem) return QM.ui.viewReportagens(reportagem[1], reportagem[2]);
     
@@ -36,7 +38,10 @@
 
   QM.router.rotear = function () {
     var hash = window.location.hash || '#/';
-    QM.ui.renderizar(resolver(hash), hash);
+    var conteudo = resolver(hash);
+    
+    QM.ui.renderizar(conteudo, hash);
+
     var secao = secaoDe(hash);
     if (secao !== secaoAnterior) window.scrollTo(0, 0);
     secaoAnterior = secao;

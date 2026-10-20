@@ -1,4 +1,7 @@
-/* Jogos educativos — estilos isolados da navegação e do catálogo. */
+/* ==========================================================================
+   Jogos Educativos de Química - Estilos Base e Módulos Integrados
+   ========================================================================== */
+
 .qm-jogo {
   --qm-cor: #3fbdfc;
   --qm-acao: #0369a1;
@@ -34,6 +37,22 @@
   --qm-borda-tema: #e9d5ff;
 }
 
+.qm-jogo.qm-tema-balanceamento {
+  --qm-cor: #d5f583;
+  --qm-acao: #4d7c0f;
+  --qm-acao-hover: #3f6212;
+  --qm-fundo-tema: #f7fee7;
+  --qm-borda-tema: #d9f99d;
+}
+
+.qm-jogo.qm-tema-misturas {
+  --qm-cor: #fdd835;
+  --qm-acao: #a16207;
+  --qm-acao-hover: #854d0e;
+  --qm-fundo-tema: #fefce8;
+  --qm-borda-tema: #fef08a;
+}
+
 .qm-jogo *,
 .qm-jogo *::before,
 .qm-jogo *::after {
@@ -43,6 +62,7 @@
 .qm-jogo [hidden] { display: none !important; }
 .qm-jogo .qm-estado-opcao { display: block; margin-top: 4px; }
 .qm-jogo .qm-dados-energia { display: none; }
+
 @media (max-width: 600px) {
   .qm-jogo .qm-dados-energia {
     display: flex;
@@ -54,6 +74,7 @@
     text-align: center;
   }
 }
+
 .qm-jogo :where(h1, h2, h3, h4) {
   color: var(--qm-tinta);
   font-family: var(--fonte-display, system-ui, sans-serif);
@@ -73,6 +94,7 @@
 .qm-jogo :where(p + p) { margin-top: 10px; }
 .qm-jogo :where(sub, sup) { line-height: 0; }
 
+/* Navegação e Cabeçalhos */
 .qm-jogo .qm-voltar {
   display: inline-flex;
   align-items: center;
@@ -141,6 +163,8 @@
 }
 .qm-jogo .qm-marca sub { font-size: 0.55em; transform: translateY(0.35em); }
 .qm-jogo .qm-sessao { min-width: 0; }
+
+/* Início e Painéis */
 .qm-jogo .qm-inicio-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
@@ -170,6 +194,8 @@
 }
 .qm-jogo .qm-subtitulo { margin: 0 0 12px; font-size: 1.45rem; }
 .qm-jogo .qm-texto-suave { color: var(--qm-suave); font-size: 0.9rem; }
+
+/* Seleção de Níveis */
 .qm-jogo .qm-niveis {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
@@ -200,6 +226,8 @@
   background: var(--qm-fundo-tema);
 }
 .qm-jogo .qm-nivel[aria-pressed="true"] strong { color: var(--qm-acao); }
+
+/* Regras e Ações */
 .qm-jogo .qm-regras { margin: 20px 0; }
 .qm-jogo .qm-regras ol,
 .qm-jogo ol.qm-regras { padding-left: 22px; }
@@ -281,7 +309,7 @@
 .qm-jogo .qm-fontes ul { margin: 6px 0 6px; padding-left: 22px; }
 .qm-jogo .qm-fontes li { margin-bottom: 9px; }
 
-/* Partida: progresso, estrutura química e respostas. */
+/* Status da Partida */
 .qm-jogo .qm-status {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
@@ -358,6 +386,8 @@
 }
 .qm-jogo .qm-formula { margin: 12px 0; }
 .qm-jogo .qm-legenda { margin-top: 12px; color: var(--qm-suave); font-size: 0.83rem; line-height: 1.6; }
+
+/* Tabelas e Alternativas de Escolha Única */
 .qm-jogo .qm-tabela-dados {
   width: 100%;
   max-width: 600px;
@@ -373,6 +403,7 @@
 .qm-jogo .qm-tabela-dados th { color: var(--qm-tinta); font-weight: 650; }
 .qm-jogo .qm-tabela-dados th:last-child,
 .qm-jogo .qm-tabela-dados td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+
 .qm-jogo .qm-alternativas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
 .qm-jogo .qm-alternativa {
   display: grid;
@@ -417,7 +448,8 @@
 .qm-jogo .qm-alternativa.qm-correta .qm-letra { border-color: #15803d; background: #15803d; color: #fff; }
 .qm-jogo .qm-alternativa.qm-incorreta { border-color: #b91c1c; background: #fef2f2; color: #7f1d1d; }
 .qm-jogo .qm-alternativa.qm-incorreta .qm-letra { border-color: #b91c1c; background: #b91c1c; color: #fff; }
-.qm-jogo .qm-estado-opcao { grid-column: 2; font-size: 0.75rem; font-weight: 650; }
+
+/* Inputs Numéricos Gerais */
 .qm-jogo .qm-form-resposta { margin-top: 22px; }
 .qm-jogo .qm-campo-numero {
   display: flex;
@@ -474,6 +506,8 @@
 .qm-jogo .qm-unidade { color: var(--qm-suave); font-size: 0.9rem; }
 .qm-jogo .qm-entrada-numero .qm-unidade { flex: 0 0 auto; }
 .qm-jogo .qm-erro { margin-top: 10px; color: #b91c1c; font-size: 0.88rem; font-weight: 550; }
+
+/* Dicas e Feedback */
 .qm-jogo .qm-dica-botao {
   display: inline-flex;
   align-items: center;
@@ -515,6 +549,7 @@
 .qm-jogo .qm-feedback h3 { margin: 0 0 8px; color: inherit; font-size: 1.12rem; }
 .qm-jogo .qm-feedback-acerto { border-color: #86c99e; background: #f0fdf4; color: #14532d; }
 .qm-jogo .qm-feedback-erro { border-color: #e6a2a2; background: #fff5f5; color: #7f1d1d; }
+
 .qm-jogo .qm-aviso-saida {
   margin: 16px 0;
   padding: 20px;
@@ -536,7 +571,141 @@
 }
 .qm-jogo .qm-rodape-partida .qm-acoes { margin-top: 0; }
 
-/* Resultado e revisão: o conteúdo continua acessível por teclado. */
+/* ==========================================================================
+   Módulo: Equilibre as Equações (.qm-equacao-exibicao, .qm-input-coeficiente, etc.)
+   ========================================================================== */
+
+.qm-jogo .qm-equacao-exibicao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid var(--qm-borda-tema);
+  border-radius: 16px;
+  background: var(--qm-fundo-tema);
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 600;
+}
+
+.qm-jogo .qm-input-coeficiente {
+  width: 52px;
+  height: 48px;
+  padding: 4px;
+  border: 2px solid var(--qm-borda);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--qm-tinta);
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-align: center;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.qm-jogo .qm-input-coeficiente:focus {
+  outline: none;
+  border-color: var(--qm-acao);
+  box-shadow: 0 0 0 3px rgba(3, 105, 161, 0.15);
+}
+
+.qm-jogo .qm-contador-atomos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+  padding: 16px 20px;
+  border: 1px solid var(--qm-borda);
+  border-radius: 14px;
+  background: #fff;
+}
+
+.qm-jogo .qm-contador-coluna h4 {
+  margin: 0 0 8px;
+  color: var(--qm-suave);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.qm-jogo .qm-item-atomo {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--qm-borda);
+  font-size: 0.92rem;
+  font-weight: 550;
+}
+
+.qm-jogo .qm-item-atomo:last-child {
+  border-bottom: none;
+}
+
+.qm-jogo .qm-item-atomo.qm-balanceado { color: #15803d; }
+.qm-jogo .qm-item-atomo.qm-desbalanceado { color: #b45309; }
+
+.qm-jogo .qm-termo { display: inline-flex; align-items: center; gap: 8px; }
+.qm-jogo .qm-coef { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.qm-jogo .qm-coef-botao {
+  width: 38px;
+  min-height: 30px;
+  padding: 0;
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: var(--qm-acao);
+  font-family: system-ui, sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+.qm-jogo .qm-coef-botao:hover:not(:disabled) { border-color: var(--qm-acao); background: var(--qm-fundo-tema); }
+.qm-jogo .qm-coef-botao:focus-visible { outline: 3px solid var(--qm-acao); outline-offset: 2px; }
+.qm-jogo .qm-coef-botao:disabled { color: #64748b; cursor: default; }
+.qm-jogo .qm-coef-valor { min-width: 28px; color: var(--qm-tinta); font-size: 1.35rem; font-weight: 700; text-align: center; }
+.qm-jogo .qm-formula-quimica { color: var(--qm-tinta); font-size: clamp(1.15rem, 3vw, 1.6rem); font-weight: 600; white-space: nowrap; }
+.qm-jogo .qm-operador,
+.qm-jogo .qm-seta { color: var(--qm-acao); font-weight: 700; }
+.qm-jogo .qm-seta { margin: 0 8px; font-size: 1.6rem; }
+.qm-jogo .qm-item-atomo small { font-weight: 500; }
+
+/* ==========================================================================
+   Módulo: Mistério das Misturas (.qm-cartao-mistura, .qm-componente-tag)
+   ========================================================================== */
+
+.qm-jogo .qm-cartao-mistura {
+  text-align: center;
+  padding: 24px;
+  border: 1px solid var(--qm-borda-tema);
+  border-radius: 18px;
+  background: var(--qm-fundo-tema);
+  margin-bottom: 20px;
+}
+
+.qm-jogo .qm-visual .qm-cartao-mistura { margin: 0; padding: 0; border: 0; background: transparent; }
+.qm-jogo .qm-cartao-mistura h3 {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+}
+
+.qm-jogo .qm-componente-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: #fff;
+  border: 1px solid var(--qm-borda-tema);
+  color: var(--qm-acao);
+  font-size: 0.85rem;
+  font-weight: 650;
+}
+
+/* ==========================================================================
+   Resultado e Revisão
+   ========================================================================== */
+
 .qm-jogo .qm-resultados-cabecalho { max-width: 650px; margin: 0 auto 24px; text-align: center; }
 .qm-jogo .qm-resultados-cabecalho h2 { margin-bottom: 12px; font-size: clamp(1.65rem, 3vw, 2.25rem); }
 .qm-jogo .qm-resultado-numero {
@@ -615,6 +784,10 @@
 /* Única exceção ao escopo: a pontuação real nos cartões do catálogo. */
 .qm-pontuacao-real { font-size: 0.78rem; line-height: 1.45; font-variant-numeric: tabular-nums; }
 
+/* ==========================================================================
+   Responsividade & Media Queries
+   ========================================================================== */
+
 @media (max-width: 800px) {
   .qm-jogo .qm-inicio-grid { grid-template-columns: minmax(0, 1fr); }
   .qm-jogo .qm-jogo-cabecalho { grid-template-columns: minmax(0, 1fr) 136px; gap: 22px; }
@@ -652,6 +825,7 @@
   .qm-jogo .qm-metrica { flex-direction: row; align-items: center; justify-content: space-between; min-height: 66px; padding: 16px; gap: 12px; text-align: left; }
   .qm-jogo .qm-metrica strong { font-size: 1.3rem; text-align: right; }
   .qm-jogo .qm-revisao-item { padding: 0 14px; }
+  .qm-jogo .qm-contador-atomos { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -4,17 +4,17 @@
    pontuacaoDemo: dado de demonstração do protótipo — NÃO é registro real.
    rota null = jogo ainda não implementado (botão "Em breve"). */
 (function (QM) {
-  'use strict';
+  'state strict';
   QM.dados = QM.dados || {};
 
   QM.dados.catalogo = [
-    { area: 'Química Geral & Inorgânica', jogo: 'Equilibre as Equações', tipo: 'Quiz', dificuldade: 'Fácil', topicos: ['Estrutura Atômica', 'Tabela Periódica'], pontuacaoDemo: 85, bg: '#D5F583', texto: 'escuro', icone: 'atomo', rota: '#/jogo/balanceamento' },
+    { id: 'balanceamento', area: 'Química Geral & Inorgânica', jogo: 'Equilibre as Equações', tipo: 'Quiz de balanceamento', dificuldade: '3 níveis', topicos: ['Balanceamento', 'Lei de Lavoisier', 'Estequiometria'], pontuacaoDemo: null, bg: '#D5F583', texto: 'escuro', icone: 'atomo', rota: '#/jogo/balanceamento' },
     { id: 'nomeie-molecula', area: 'Química Orgânica', jogo: 'Nomeie a Molécula', tipo: 'Quiz visual', dificuldade: '3 níveis', topicos: ['Hidrocarbonetos', 'Grupos Funcionais', 'Nomenclatura'], pontuacaoDemo: null, bg: '#3FBDFC', texto: 'escuro', icone: 'molecula', rota: '#/jogo/nomeie-molecula' },
     { id: 'desafio-entalpia', area: 'Físico-Química', jogo: 'Desafio da Entalpia', tipo: 'Quiz e cálculo', dificuldade: '3 níveis', topicos: ['Termoquímica', 'Lei de Hess', 'Energia de ligação'], pontuacaoDemo: null, bg: '#9B51E0', texto: 'claro', icone: 'gota', rota: '#/jogo/desafio-entalpia' },
-    { area: 'Química Analítica', jogo: 'Mistério das Misturas', tipo: 'Quiz', dificuldade: 'Fácil', topicos: ['Titulação', 'Instrumentação'], pontuacaoDemo: 65, bg: '#FDD835', texto: 'escuro', icone: 'erlenmeyer', rota: null },
+    { id: 'misterio-misturas', area: 'Química Analítica', jogo: 'Mistério das Misturas', tipo: 'Quiz de casos', dificuldade: '3 níveis', topicos: ['Classificação de misturas', 'Métodos de separação', 'Propriedades físicas'], pontuacaoDemo: null, bg: '#FDD835', texto: 'escuro', icone: 'erlenmeyer', rota: '#/jogo/misterio-misturas' },
     { area: 'Bioquímica', jogo: 'Reconstrua a Proteína', tipo: 'Quiz', dificuldade: 'Médio', topicos: ['Proteínas', 'DNA/RNA'], pontuacaoDemo: 85, bg: '#F48FB1', texto: 'claro', icone: 'dna', rota: null },
     { id: 'quimica-ambiental', area: 'Química Ambiental', jogo: 'Redução de Carbono', tipo: 'Quiz educativo', dificuldade: '3 níveis', topicos: ['Poluição e tratamento', 'Ciclos biogeoquímicos', 'Sustentabilidade'], pontuacaoDemo: null, bg: '#FF9800', texto: 'claro', icone: 'globo', rota: '#/jogo/quimica-ambiental', dica: 'Dica Rápida' },
-    { area: 'Química Geral', jogo: 'Encontre o Impostor', tipo: 'Quiz', dificuldade: 'Médio', topicos: ['Famílias químicas', 'Classificação dos elementos'], pontuacaoDemo: null, bg: '#6366F1', texto: 'claro', icone: 'impostor', rota: '#/jogo/impostor' }
+    { id: 'impostor', area: 'Química Geral', jogo: 'Encontre o Impostor', tipo: 'Quiz', dificuldade: 'Médio', topicos: ['Famílias químicas', 'Classificação dos elementos'], pontuacaoDemo: null, bg: '#6366F1', texto: 'claro', icone: 'impostor', rota: '#/jogo/impostor' }
   ];
 
   QM.dados.painelPontuacao = {
@@ -39,15 +39,7 @@
       descricao: 'Analise grupos de elementos e identifique qual deles não pertence ao conjunto, justificando pela estrutura eletrônica e pelas propriedades periódicas.', 
       rota: '#/jogo/impostor' 
     },
-    { 
-      id: 'balanceamento', 
-      titulo: 'Balanceamento de Equações', 
-      materia: 'Química Geral / Estequiometria', 
-      topicos: ['Leis das reações', 'Coeficientes estequiométricos'], 
-      dificuldade: 'Médio-avançado', 
-      descricao: 'Ajuste os coeficientes das equações químicas até conservar o número de átomos de cada elemento entre reagentes e produtos.', 
-      rota: '#/jogo/balanceamento' 
-    },
+    
     { 
       id: 'quimica-ambiental', 
       titulo: 'Redução de Carbono', 
@@ -56,15 +48,6 @@
       dificuldade: '3 níveis', 
       descricao: 'Investigue água, ar e solo, interprete processos ambientais e escolha soluções sustentáveis com base na química.', 
       rota: '#/jogo/quimica-ambiental' 
-    },
-    { 
-      id: 'organica', 
-      titulo: 'Desafio de Química Orgânica', 
-      materia: 'Química Orgânica', 
-      topicos: ['Funções orgânicas', 'Cadeias carbônicas', 'Nomenclatura IUPAC'], 
-      dificuldade: 'Médio', 
-      descricao: 'Identifique funções orgânicas, estruturas de cadeias carbônicas e a nomenclatura IUPAC correta de diversos compostos.', 
-      rota: '#/jogo/organica' 
     }
   ];
 })(window.QM = window.QM || {});
