@@ -13,7 +13,7 @@
     { id: 'desafio-entalpia', area: 'Físico-Química', jogo: 'Desafio da Entalpia', tipo: 'Quiz e cálculo', dificuldade: '3 níveis', topicos: ['Termoquímica', 'Lei de Hess', 'Energia de ligação'], pontuacaoDemo: null, bg: '#9B51E0', texto: 'claro', icone: 'gota', rota: '#/jogo/desafio-entalpia' },
     { area: 'Química Analítica', jogo: 'Mistério das Misturas', tipo: 'Quiz', dificuldade: 'Fácil', topicos: ['Titulação', 'Instrumentação'], pontuacaoDemo: 65, bg: '#FDD835', texto: 'escuro', icone: 'erlenmeyer', rota: null },
     { area: 'Bioquímica', jogo: 'Reconstrua a Proteína', tipo: 'Quiz', dificuldade: 'Médio', topicos: ['Proteínas', 'DNA/RNA'], pontuacaoDemo: 85, bg: '#F48FB1', texto: 'claro', icone: 'dna', rota: null },
-    { area: 'Química Ambiental', jogo: 'Redução de Carbono', tipo: 'Quiz', dificuldade: '—', topicos: ['Ciclos Biogeoquímicos', 'Sustentabilidade'], pontuacaoDemo: 85, bg: '#FF9800', texto: 'claro', icone: 'globo', rota: null, dica: 'Dica Rápida' },
+    { id: 'quimica-ambiental', area: 'Química Ambiental', jogo: 'Redução de Carbono', tipo: 'Quiz educativo', dificuldade: '3 níveis', topicos: ['Poluição e tratamento', 'Ciclos biogeoquímicos', 'Sustentabilidade'], pontuacaoDemo: null, bg: '#FF9800', texto: 'claro', icone: 'globo', rota: '#/jogo/quimica-ambiental', dica: 'Dica Rápida' },
     { area: 'Química Geral', jogo: 'Encontre o Impostor', tipo: 'Quiz', dificuldade: 'Médio', topicos: ['Famílias químicas', 'Classificação dos elementos'], pontuacaoDemo: null, bg: '#6366F1', texto: 'claro', icone: 'impostor', rota: '#/jogo/impostor' }
   ];
 
@@ -47,6 +47,15 @@
       dificuldade: 'Médio-avançado', 
       descricao: 'Ajuste os coeficientes das equações químicas até conservar o número de átomos de cada elemento entre reagentes e produtos.', 
       rota: '#/jogo/balanceamento' 
+    },
+    { 
+      id: 'quimica-ambiental', 
+      titulo: 'Redução de Carbono', 
+      materia: 'Química Ambiental', 
+      topicos: ['Poluição e tratamento', 'Ciclos biogeoquímicos', 'Sustentabilidade'], 
+      dificuldade: '3 níveis', 
+      descricao: 'Investigue água, ar e solo, interprete processos ambientais e escolha soluções sustentáveis com base na química.', 
+      rota: '#/jogo/quimica-ambiental' 
     },
     { 
       id: 'organica', 
