@@ -9,8 +9,8 @@
 
   QM.dados.catalogo = [
     { area: 'Química Geral & Inorgânica', jogo: 'Equilibre as Equações', tipo: 'Quiz', dificuldade: 'Fácil', topicos: ['Estrutura Atômica', 'Tabela Periódica'], pontuacaoDemo: 85, bg: '#D5F583', texto: 'escuro', icone: 'atomo', rota: '#/jogo/balanceamento' },
-    { area: 'Química Orgânica', jogo: 'Nomeie a Molécula', tipo: 'Quiz', dificuldade: 'Médio', topicos: ['Hidrocarbonetos', 'Grupos Funcionais'], pontuacaoDemo: 85, bg: '#3FBDFC', texto: 'escuro', icone: 'molecula', rota: null },
-    { area: 'Físico-Química', jogo: 'Desafio da Entalpia', tipo: 'Quiz', dificuldade: 'Difícil', topicos: ['Termodinâmica', 'Cinética Química'], pontuacaoDemo: 85, bg: '#9B51E0', texto: 'claro', icone: 'gota', rota: null },
+    { id: 'nomeie-molecula', area: 'Química Orgânica', jogo: 'Nomeie a Molécula', tipo: 'Quiz visual', dificuldade: '3 níveis', topicos: ['Hidrocarbonetos', 'Grupos Funcionais', 'Nomenclatura'], pontuacaoDemo: null, bg: '#3FBDFC', texto: 'escuro', icone: 'molecula', rota: '#/jogo/nomeie-molecula' },
+    { id: 'desafio-entalpia', area: 'Físico-Química', jogo: 'Desafio da Entalpia', tipo: 'Quiz e cálculo', dificuldade: '3 níveis', topicos: ['Termoquímica', 'Lei de Hess', 'Energia de ligação'], pontuacaoDemo: null, bg: '#9B51E0', texto: 'claro', icone: 'gota', rota: '#/jogo/desafio-entalpia' },
     { area: 'Química Analítica', jogo: 'Mistério das Misturas', tipo: 'Quiz', dificuldade: 'Fácil', topicos: ['Titulação', 'Instrumentação'], pontuacaoDemo: 65, bg: '#FDD835', texto: 'escuro', icone: 'erlenmeyer', rota: null },
     { area: 'Bioquímica', jogo: 'Reconstrua a Proteína', tipo: 'Quiz', dificuldade: 'Médio', topicos: ['Proteínas', 'DNA/RNA'], pontuacaoDemo: 85, bg: '#F48FB1', texto: 'claro', icone: 'dna', rota: null },
     { area: 'Química Ambiental', jogo: 'Redução de Carbono', tipo: 'Quiz', dificuldade: '—', topicos: ['Ciclos Biogeoquímicos', 'Sustentabilidade'], pontuacaoDemo: 85, bg: '#FF9800', texto: 'claro', icone: 'globo', rota: null, dica: 'Dica Rápida' },
