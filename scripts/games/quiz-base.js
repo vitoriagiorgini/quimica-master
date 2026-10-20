@@ -36,6 +36,79 @@
     return isFinite(numero) ? numero : null;
   }
 
+  /* ---- Equações químicas: leitura de fórmulas e contagem de átomos ---- */
+  var SUBSCRITOS = { 0: '\u2080', 1: '\u2081', 2: '\u2082', 3: '\u2083', 4: '\u2084', 5: '\u2085', 6: '\u2086', 7: '\u2087', 8: '\u2088', 9: '\u2089' };
+  var COEFICIENTE_MAXIMO = 30;
+
+  function formulaTexto(formula) {
+    return String(formula).replace(/\d/g, function (digito) { return SUBSCRITOS[digito]; });
+  }
+
+  function formulaHtml(formula) {
+    return escapar(formula).replace(/(\d+)/g, '<sub>$1</sub>');
+  }
+
+  /* Converte "Ca3(PO4)2" em { Ca: 3, P: 2, O: 8 }. Devolve null se a fórmula for inválida. */
+  function contarAtomos(formula) {
+    var texto = String(formula);
+    var pilha = [{}];
+    var i = 0;
+    function lerNumeroInteiro() {
+      var inicio = i;
+      while (i < texto.length && /\d/.test(texto.charAt(i))) i++;
+      return inicio === i ? 1 : parseInt(texto.slice(inicio, i), 10);
+    }
+    while (i < texto.length) {
+      var c = texto.charAt(i);
+      if (c === '(') { pilha.push({}); i++; }
+      else if (c === ')') {
+        if (pilha.length < 2) return null;
+        i++;
+        var multiplo = lerNumeroInteiro();
+        var grupo = pilha.pop();
+        Object.keys(grupo).forEach(function (el) { pilha[pilha.length - 1][el] = (pilha[pilha.length - 1][el] || 0) + grupo[el] * multiplo; });
+      } else if (/[A-Z]/.test(c)) {
+        var simbolo = c;
+        i++;
+        if (i < texto.length && /[a-z]/.test(texto.charAt(i))) { simbolo += texto.charAt(i); i++; }
+        var quantidade = lerNumeroInteiro();
+        pilha[pilha.length - 1][simbolo] = (pilha[pilha.length - 1][simbolo] || 0) + quantidade;
+      } else return null;
+    }
+    return pilha.length === 1 && Object.keys(pilha[0]).length ? pilha[0] : null;
+  }
+
+  function somarAtomos(termos, coeficientes) {
+    var total = {};
+    termos.forEach(function (termo, indice) {
+      var atomos = contarAtomos(termo.formula);
+      Object.keys(atomos).forEach(function (el) { total[el] = (total[el] || 0) + atomos[el] * coeficientes[indice]; });
+    });
+    return total;
+  }
+
+  function contagemEquacao(questao, coeficientes) {
+    var reagentes = somarAtomos(questao.reagentes, coeficientes.r);
+    var produtos = somarAtomos(questao.produtos, coeficientes.p);
+    var elementos = Object.keys(reagentes);
+    Object.keys(produtos).forEach(function (el) { if (elementos.indexOf(el) === -1) elementos.push(el); });
+    return {
+      reagentes: reagentes,
+      produtos: produtos,
+      elementos: elementos,
+      balanceada: elementos.every(function (el) { return (reagentes[el] || 0) === (produtos[el] || 0); })
+    };
+  }
+
+  function equacaoTexto(questao, coeficientes) {
+    function lado(termos, lista) {
+      return termos.map(function (termo, indice) {
+        return (lista[indice] > 1 ? lista[indice] + ' ' : '') + formulaTexto(termo.formula);
+      }).join(' + ');
+    }
+    return lado(questao.reagentes, coeficientes.r) + ' \u2192 ' + lado(questao.produtos, coeficientes.p);
+  }
+
   function tituloNivel(jogo) {
     return jogo.config.niveis.filter(function (n) { return n.id === jogo.estado.nivel; })[0].titulo;
   }
@@ -44,6 +117,7 @@
 
   function textoCorreto(questao) {
     if (questao.tipo === 'numero') return numeroLocal(questao.resposta) + ' ' + questao.unidade;
+    if (questao.tipo === 'equacao') return equacaoTexto(questao, questao.corretos);
     return questao.opcoes.filter(function (opcao) { return opcao.id === questao.correta; })[0].texto;
   }
 
@@ -116,12 +190,48 @@
       '<button class="qm-sr-only" type="submit" tabindex="-1"' + (estado.respondida ? ' disabled' : '') + '>Conferir resposta</button></div></form>';
   }
 
+  function termoEquacao(jogo, termo, lado, indice) {
+    var estado = jogo.estado;
+    var valor = estado.coef[lado][indice];
+    var nome = formulaTexto(termo.formula);
+    var travado = estado.respondida ? ' disabled' : '';
+    return '<div class="qm-termo"><div class="qm-coef" role="group" aria-label="Coeficiente de ' + escapar(nome) + '">' +
+      '<button type="button" class="qm-coef-botao" data-qm-acao="coef" data-qm-lado="' + lado + '" data-qm-idx="' + indice +
+      '" data-qm-passo="1" aria-label="Aumentar o coeficiente de ' + escapar(nome) + '"' + travado + '>+</button>' +
+      '<output class="qm-coef-valor" aria-live="polite">' + valor + '</output>' +
+      '<button type="button" class="qm-coef-botao" data-qm-acao="coef" data-qm-lado="' + lado + '" data-qm-idx="' + indice +
+      '" data-qm-passo="-1" aria-label="Diminuir o coeficiente de ' + escapar(nome) + '"' + travado + '>\u2212</button></div>' +
+      '<span class="qm-formula-quimica">' + formulaHtml(termo.formula) + '</span></div>';
+  }
+
+  function equacaoInterativa(jogo, questao) {
+    var estado = jogo.estado;
+    var contagem = contagemEquacao(questao, estado.coef);
+    function lado(termos, chave) {
+      return termos.map(function (termo, indice) {
+        return termoEquacao(jogo, termo, chave, indice) + (indice < termos.length - 1 ? '<span class="qm-operador" aria-hidden="true">+</span>' : '');
+      }).join('');
+    }
+    function coluna(titulo, totais) {
+      return '<div class="qm-contador-coluna"><h4>' + titulo + '</h4>' + contagem.elementos.map(function (el) {
+        var igual = (contagem.reagentes[el] || 0) === (contagem.produtos[el] || 0);
+        return '<div class="qm-item-atomo ' + (igual ? 'qm-balanceado' : 'qm-desbalanceado') + '"><span>' + escapar(el) +
+          '</span><strong>' + (totais[el] || 0) + ' <small>' + (igual ? 'igual' : 'diferente') + '</small></strong></div>';
+      }).join('') + '</div>';
+    }
+    return '<div class="qm-equacao-exibicao" role="group" aria-label="Equação química para balancear">' +
+      lado(questao.reagentes, 'r') + '<span class="qm-seta" aria-label="produz">\u2192</span>' + lado(questao.produtos, 'p') + '</div>' +
+      '<div class="qm-contador-atomos" aria-label="Contagem de átomos">' + coluna('Reagentes', contagem.reagentes) + coluna('Produtos', contagem.produtos) + '</div>' +
+      '<p class="qm-nota">Use + e \u2212 para ajustar os coeficientes. A contagem de átomos se atualiza a cada mudança.</p>';
+  }
+
   function feedback(jogo, questao) {
     var estado = jogo.estado;
     var resposta = estado.historico[estado.historico.length - 1];
     return '<section class="qm-feedback qm-feedback-' + (resposta.acertou ? 'acerto' : 'erro') + '" tabindex="-1" aria-label="Resultado da resposta">' +
       '<h3>' + (resposta.acertou ? 'Isso mesmo! +' + resposta.pontos + ' pontos' : 'Vamos entender essa resposta') + '</h3>' +
-      '<p><strong>Resposta correta: ' + escapar(textoCorreto(questao)) + '.</strong></p><p>' + escapar(questao.explicacao) + '</p></section>';
+      '<p><strong>Resposta correta: ' + escapar(textoCorreto(questao)) + '.</strong></p>' +
+      (resposta.nota ? '<p>' + escapar(resposta.nota) + '</p>' : '') + '<p>' + escapar(questao.explicacao) + '</p></section>';
   }
 
   function partida(jogo) {
@@ -136,10 +246,10 @@
       '<div class="qm-progresso" role="progressbar" aria-label="Desafios respondidos" aria-valuemin="0" aria-valuemax="' + estado.rodadas.length +
       '" aria-valuenow="' + concluidas + '"><div class="qm-progresso-preenchido" style="width:' + (concluidas * 100 / estado.rodadas.length) + '%"></div></div>' +
       '<div class="qm-questao-topo"><span class="qm-tag">' + escapar(questao.topico) + '</span><span class="qm-texto-suave">' +
-      (questao.tipo === 'numero' ? 'Calcule e responda' : 'Escolha uma alternativa') + '</span></div>' +
+      (questao.tipo === 'numero' ? 'Calcule e responda' : questao.tipo === 'equacao' ? 'Ajuste os coeficientes' : 'Escolha uma alternativa') + '</span></div>' +
       '<h2 class="qm-pergunta" tabindex="-1">' + escapar(questao.enunciado) + '</h2>' +
       (questao.visual ? '<div class="qm-visual">' + questao.visual + '</div>' : '') +
-      (questao.tipo === 'numero' ? campoNumerico(jogo, questao) : alternativas(jogo, questao));
+      (questao.tipo === 'numero' ? campoNumerico(jogo, questao) : questao.tipo === 'equacao' ? equacaoInterativa(jogo, questao) : alternativas(jogo, questao));
     if (estado.dicaUsada) html += '<aside class="qm-dica" tabindex="-1"><strong>Uma pista para você</strong><p>' + escapar(questao.dica) + '</p></aside>';
     if (estado.respondida) html += feedback(jogo, questao);
     html += '<div class="qm-rodape-partida"><div class="qm-acoes">' +
@@ -164,7 +274,7 @@
         (resposta.acertou ? 'Acertou' : 'Rever resposta') + ' · ' + resposta.pontos + ' pts</summary><div class="qm-revisao-corpo">' +
         '<p><strong>' + escapar(questao.enunciado) + '</strong></p>' + (questao.visual ? '<div class="qm-visual">' + questao.visual + '</div>' : '') +
         '<p>Sua resposta: <strong>' + escapar(resposta.texto) + '</strong>.</p><p>Resposta correta: <strong>' + escapar(textoCorreto(questao)) + '</strong>.</p>' +
-        '<p>' + escapar(questao.explicacao) + '</p>' + (resposta.comDica ? '<p class="qm-nota">Você utilizou uma dica neste desafio.</p>' : '') + '</div></details>';
+        (resposta.nota ? '<p>' + escapar(resposta.nota) + '</p>' : '') + '<p>' + escapar(questao.explicacao) + '</p>' + (resposta.comDica ? '<p class="qm-nota">Você utilizou uma dica neste desafio.</p>' : '') + '</div></details>';
     }).join('');
     var recorde = QM.app.obterProgressoJogo(jogo.config.metadados.id, estado.nivel);
     return '<section class="qm-painel"><div class="qm-resultados-cabecalho"><p class="qm-sobretitulo">Partida concluída · ' + escapar(tituloNivel(jogo)) + '</p>' +
@@ -200,6 +310,10 @@
     var estado = jogo.estado;
     var questao = atual(jogo);
     estado.opcoes = questao.tipo === 'escolha' ? embaralhar(questao.opcoes) : [];
+    estado.coef = {
+      r: questao.tipo === 'equacao' ? questao.reagentes.map(function () { return 1; }) : [],
+      p: questao.tipo === 'equacao' ? questao.produtos.map(function () { return 1; }) : []
+    };
     estado.selecao = null;
     estado.valor = '';
     estado.respondida = false;
@@ -225,7 +339,14 @@
     var questao = atual(jogo);
     var acertou;
     var texto;
-    if (questao.tipo === 'numero') {
+    var nota = '';
+    if (questao.tipo === 'equacao') {
+      acertou = contagemEquacao(questao, estado.coef).balanceada;
+      texto = equacaoTexto(questao, estado.coef);
+      var minima = estado.coef.r.every(function (valor, i) { return valor === questao.corretos.r[i]; }) &&
+        estado.coef.p.every(function (valor, i) { return valor === questao.corretos.p[i]; });
+      if (acertou && !minima) nota = 'Sua equação está balanceada, mas os menores coeficientes inteiros são os indicados acima.';
+    } else if (questao.tipo === 'numero') {
       var campo = raiz.querySelector('.qm-numero');
       estado.valor = campo.value;
       var numero = lerNumero(estado.valor);
@@ -247,7 +368,7 @@
     var pontos = acertou ? (estado.dicaUsada ? PONTOS_COM_DICA : PONTOS_ACERTO) : 0;
     estado.pontos += pontos;
     if (acertou) estado.acertos++;
-    estado.historico.push({ questao: questao, texto: texto, acertou: acertou, pontos: pontos, comDica: estado.dicaUsada });
+    estado.historico.push({ questao: questao, texto: texto, acertou: acertou, pontos: pontos, comDica: estado.dicaUsada, nota: nota });
     /* Salva ao responder a última questão, mesmo se a pessoa sair antes de
        clicar em "Ver meu resultado". A trava respondida evita contagem dupla. */
     if (estado.indice === estado.rodadas.length - 1) {
@@ -304,6 +425,13 @@
       else if (acao === 'dica' && !estado.respondida && !estado.dicaUsada) {
         estado.dicaUsada = true;
         atualizarTela(jogo, raiz, '.qm-dica');
+      } else if (acao === 'coef' && !estado.respondida) {
+        var lado = alvo.getAttribute('data-qm-lado');
+        var posicao = parseInt(alvo.getAttribute('data-qm-idx'), 10);
+        var passo = parseInt(alvo.getAttribute('data-qm-passo'), 10);
+        if ((lado !== 'r' && lado !== 'p') || !estado.coef[lado] || !isFinite(posicao) || estado.coef[lado][posicao] === undefined || (passo !== 1 && passo !== -1)) return;
+        estado.coef[lado][posicao] = Math.min(COEFICIENTE_MAXIMO, Math.max(1, estado.coef[lado][posicao] + passo));
+        atualizarTela(jogo, raiz, '[data-qm-acao="coef"][data-qm-lado="' + lado + '"][data-qm-idx="' + posicao + '"][data-qm-passo="' + passo + '"]');
       } else if (acao === 'sinal' && !estado.respondida) {
         var valor = estado.valor.trim().replace(/\u2212/g, '-');
         estado.valor = valor.charAt(0) === '-' ? valor.slice(1) : '-' + valor.replace(/^\+/, '');
@@ -333,6 +461,16 @@
       if (!questao.id || ids[questao.id] || !questao.enunciado || !questao.dica || !questao.explicacao ||
         !config.niveis.some(function (nivel) { return nivel.id === questao.nivel; })) return false;
       ids[questao.id] = true;
+      if (questao.tipo === 'equacao') {
+        var c = questao.corretos;
+        var termosValidos = function (termos, lista) {
+          return Array.isArray(termos) && termos.length > 0 && Array.isArray(lista) && lista.length === termos.length &&
+            termos.every(function (termo) { return termo && contarAtomos(termo.formula); }) &&
+            lista.every(function (valor) { return Number.isInteger(valor) && valor >= 1 && valor <= COEFICIENTE_MAXIMO; });
+        };
+        return Boolean(c) && termosValidos(questao.reagentes, c.r) && termosValidos(questao.produtos, c.p) &&
+          contagemEquacao(questao, c).balanceada;
+      }
       if (questao.tipo === 'numero') return typeof questao.resposta === 'number' && isFinite(questao.resposta) && Boolean(questao.unidade);
       if (questao.tipo !== 'escolha' || !Array.isArray(questao.opcoes) || questao.opcoes.length < 2) return false;
       var opcoes = {};
@@ -360,7 +498,7 @@
         '<a class="qm-voltar" href="#/">← Voltar ao catálogo</a><header class="qm-jogo-cabecalho"><div>' +
         '<p class="qm-selo">' + escapar(config.metadados.materia) + '</p><h1 class="qm-titulo">' + escapar(config.metadados.titulo) + '</h1>' +
         '<p class="qm-intro-texto">' + escapar(config.introducao) + '</p></div><div class="qm-marca" aria-hidden="true">' +
-        (config.tema === 'entalpia' ? 'ΔH' : 'CH<sub>3</sub>') + '</div></header><div class="qm-sessao">' + conteudo(jogo) + '</div></section>';
+        (config.marca || (config.tema === 'entalpia' ? 'ΔH' : 'CH<sub>3</sub>')) + '</div></header><div class="qm-sessao">' + conteudo(jogo) + '</div></section>';
     });
   };
 })(window.QM = window.QM || {});

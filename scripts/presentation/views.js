@@ -18,6 +18,8 @@
     dna: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 3c0 6 10 6 10 9s-10 3-10 9M17 3c0 6-10 6-10 9s10 3 10 9"/></svg>',
     globo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>',
     impostor: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/></svg>',
+    scale: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M6 7.5l6-3 6 3M6 7.5l-3 6a3 3 0 0 0 6 0l-3-6zM18 7.5l-3 6a3 3 0 0 0 6 0l-3-6zM4 21h16"/></svg>',
+    science: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L4.75 18.1A2 2 0 0 0 6.44 21h11.12a2 2 0 0 0 1.69-2.9L14 9.31V2M8.5 2h7M10 9h4"/></svg>',
     atomoLogo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="2"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/></svg>',
     frascoLogo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 3h6M10 3v5l-5 9a2 2 0 0 0 1.8 3h10.4a2 2 0 0 0 1.8-3l-5-9V3"/></svg>',
     logoMarca: '<svg class="logo-marca" viewBox="0 0 52 60" fill="none" aria-hidden="true"><polygon points="26,3 49,16.5 49,43.5 26,57 3,43.5 3,16.5" fill="#0293d9" stroke="#0293d9" stroke-width="6" stroke-linejoin="round"/><g stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M24 21l9.5 5.5v11L24 43l-9.5-5.5v-11z"/><path d="M17.6 28.6v6.8"/><path d="M33.5 26.5L39.5 22l2-5M39.5 22l3.5 .8"/></g></svg>',
@@ -35,7 +37,7 @@
     calendario: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
     relogio: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
     jornal: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="15" height="16" rx="2"/><path d="M18 8h3v10a2 2 0 0 1-2 2M7 9h7M7 13h7M7 17h4"/></svg>',
-    grade: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+    grade: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>'
   };
 
   function cabecalho(rotaAtiva) {
@@ -50,7 +52,6 @@
   }
 
   function rodape() {
-    /* "Contato" e "Política de Privacidade" são texto estático (sem página real ainda — sem link morto). */
     return '<footer class="rodape"><div class="rodape-inner">' +
       '<nav><a href="#/documentacao">Sobre o Projeto</a><span>Contato</span><span>Política de Privacidade</span></nav>' +
       '<span class="logo-rodape">' + ICONES.logoMarca + ' Química Master</span>' +
@@ -82,11 +83,20 @@
   });
 
   QM.ui.renderizar = function (conteudo, rotaAtiva) {
-    document.getElementById('app').innerHTML =
-      cabecalho(rotaAtiva) + '<main><div class="container">' + conteudo + '</div></main>' + rodape();
+    var appContainer = document.getElementById('app');
+    
+    // Suporte caso o conteúdo retornado pela rota seja uma função de renderização DOM
+    if (typeof conteudo === 'function') {
+      appContainer.innerHTML = cabecalho(rotaAtiva) + '<main><div class="container" id="app-content"></div></main>' + rodape();
+      var mainContent = document.getElementById('app-content');
+      conteudo(mainContent);
+    } else {
+      appContainer.innerHTML =
+        cabecalho(rotaAtiva) + '<main><div class="container" id="app-content">' + conteudo + '</div></main>' + rodape();
+    }
   };
 
-  /* ---- View: catálogo (cards coloridos do MVP) ---- */
+  /* ---- View: catálogo (cards coloridos) ---- */
   QM.ui.viewCatalogo = function () {
     var painel = QM.app.obterPainelPontuacao();
 
@@ -99,11 +109,15 @@
       var donut = c.id
         ? '<div class="qm-pontuacao-real">' + (progresso ? 'Melhor partida: <strong>' + progresso.melhorPercentual + '% de acertos</strong>' : 'Jogue para registrar seu primeiro resultado') + '</div>'
         : (c.pontuacaoDemo ? '<div class="pontuacao-linha"><span class="donut" style="--pct:' + c.pontuacaoDemo + '"></span>Exemplo: ' + c.pontuacaoDemo + '%</div>' : '');
-      var acao = c.rota
-        ? '<a class="botao-jogar' + classeBotao + '" href="' + c.rota + '">Jogar Agora</a>'
+      
+      var rotaDestino = c.rota || (c.id ? '#/jogo/' + c.id : null);
+      var acao = rotaDestino
+        ? '<a class="botao-jogar' + classeBotao + '" href="' + rotaDestino + '">Jogar Agora</a>'
         : '<span class="botao-jogar' + classeBotao + ' em-breve">Em breve</span>';
+      var iconeSvg = ICONES[c.icone] || ICONES.molecula;
+      
       return '<article class="cartao-jogo' + classeTexto + '" style="--card-bg:' + c.bg + ';--card-texto:' + (c.texto === 'claro' ? '#ffffff' : '#111827') + '">' +
-        '<div class="icone-area">' + ICONES[c.icone] + '</div>' +
+        '<div class="icone-area">' + iconeSvg + '</div>' +
         '<h2>' + c.area + '</h2>' +
         '<p class="nome-jogo">Jogo: "' + c.jogo + '"' + dica + '</p>' +
         '<div class="meta"><span><span class="rotulo">Tipo de Jogo</span> ' + c.tipo + '</span>' +
@@ -123,7 +137,7 @@
     var secaoPontuacao =
       '<section class="secao-pontuacao">' +
         '<h2>Exemplo de painel de desempenho</h2>' +
-        '<p>Este painel usa dados demonstrativos. Seus resultados reais aparecem nos cartões de Nomeie a Molécula e Desafio da Entalpia.</p>' +
+        '<p>Este painel usa dados demonstrativos. Seus resultados reais aparecem nos cartões dos jogos concluídos.</p>' +
         '<div class="barra-xp">' + painel.xp + '</div>' +
         '<div class="colunas-pontuacao">' +
           '<div class="painel-pontos fortes"><h3>(Pontos Fortes)</h3>' + painel.fortes.map(itemPonto).join('') + '</div>' +
@@ -138,13 +152,23 @@
       secaoPontuacao;
   };
 
+  /* ---- View Container para Execução de Jogos ---- */
+  QM.ui.viewJogoContainer = function (idJogo) {
+    setTimeout(function () {
+      var gameContainer = document.getElementById('game-mount-point');
+      if (gameContainer && QM.games && typeof QM.games.executar === 'function') {
+        QM.games.executar(idJogo, gameContainer);
+      }
+    }, 0);
+
+    return '<div id="game-mount-point" class="game-mount-container"></div>';
+  };
+
   /* ---- Busca e temas de Reportagens ---- */
   function normalizarBusca(texto) {
-    return String(texto || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+    return String(texto || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
   }
 
-  /* Filtra os cartões pelo texto digitado (sem acento / maiúscula). Com busca ativa,
-     procura em TODOS os temas; sem busca, mostra só o tema escolhido nos chips. */
   function filtrarReportagens(campo) {
     var area = campo.closest('.reportagens-pagina');
     if (!area) return;
@@ -164,7 +188,6 @@
     area.classList.toggle('buscando', termo !== '');
   }
 
-  /* A página é re-renderizada a cada rota, então os eventos ficam no document (delegação). */
   document.addEventListener('input', function (e) {
     if (e.target && e.target.classList && e.target.classList.contains('busca-input')) filtrarReportagens(e.target);
   });
@@ -177,9 +200,7 @@
     campo.focus();
   });
 
-  /* ---- View: reportagens — botão de pesquisa + tópicos/temas (chips) + cartões ----
-     Rotas: #/sites-e-reportagens · /:tema · /:tema/:id  (tema e id vêm do roteador).
-     Sem tema na URL = todas as reportagens. */
+  /* ---- View: reportagens ---- */
   QM.ui.viewReportagens = function (chaveTema, idReportagem) {
     var BASE = '#/sites-e-reportagens';
     var temas = QM.app.listarTemasReportagens();
@@ -189,7 +210,6 @@
 
     if (!temas.length) return topo + '<p>Nenhuma reportagem cadastrada ainda.</p>';
 
-    /* Tema inexistente na URL = todos. Reportagem inexistente = todas do escopo. */
     var temaAtivo = temas.filter(function (t) { return t.chave === chaveTema; })[0] || null;
     var todas = [];
     temas.forEach(function (t) {
@@ -203,13 +223,11 @@
       if (reportagemAtiva) return x.r === reportagemAtiva.r;
       return !temaAtivo || x.tema === temaAtivo;
     }
-    /* Destaques (máx. 2): cartões grandes no topo, só na visão "Todos" sem pesquisa. */
     var destaques = (temaAtivo || reportagemAtiva) ? [] : todas.filter(function (x) { return x.r.destaque; })
       .sort(function (a, b) { return a.r.destaque - b.r.destaque; }).slice(0, 2);
     function emDestaque(x) { return destaques.indexOf(x) !== -1; }
     var qtdEscopo = todas.filter(noEscopo).length;
 
-    /* Chips de tópicos: "Todos" + um por tema, com # como no template. */
     var chips = '<a class="chip-tema' + (!temaAtivo ? ' ativo' : '') + '" href="' + BASE + '"' +
         (!temaAtivo && !reportagemAtiva ? ' aria-current="page"' : '') + '><span class="chip-hash">#</span>Todos</a>' +
       temas.map(function (t) {
@@ -218,8 +236,6 @@
           (ativo && !reportagemAtiva ? ' aria-current="page"' : '') + '><span class="chip-hash">#</span>' + t.rotulo + '</a>';
       }).join('');
 
-    /* Formato do template: lista de linhas (miniatura à esquerda; fonte • tema; título; resumo; rodapé).
-       Campos opcionais da reportagem: imagem, data (ex.: '10 jul 2024'), leitura (minutos). */
     var cartoes = todas.map(function (x) {
       var r = x.r;
       var visivelNaLista = noEscopo(x) && !emDestaque(x);
@@ -277,7 +293,7 @@
       '</div>';
   };
 
-  /* ---- View: tabela periódica (períodos 1–3) ---- */
+  /* ---- View: tabela periódica ---- */
   QM.ui.viewTabela = function () {
     var celulas = QM.app.listarElementos().map(function (e) {
       return '<div class="elemento cat-' + e.categoria + '" style="grid-column:' + e.grupo + ';grid-row:' + e.periodo + '">' +
@@ -290,19 +306,18 @@
 
     return '<div class="hero"><h1>Tabela Periódica Interativa</h1>' +
         '<p>Consulte os elementos químicos rapidamente para te ajudar nos minijogos.</p></div>' +
-      /* ----'<div class="aviso">⚠️ Esta etapa apresenta os períodos 1–3 (18 elementos). Os demais grupos serão adicionados na próxima etapa — ver Documentação → Como adicionar elementos.</div>' +---- */
       '<div class="container-tabela"><div class="grade-periodica">' + celulas +
         '<div class="faixa-lantanideos">Metais de Transição e Séries dos Lantanídeos/Actinídeos — reservadas para etapas futuras</div>' +
       '</div></div>' +
       '<div class="legenda-periodica" aria-label="Legenda de categorias">' + legenda + '</div>';
   };
 
-  /* ---- View: documentação e situação dos jogos ---- */
+  /* ---- View: documentação ---- */
   QM.ui.viewDocumentacao = function () {
     return '<div class="doc">' +
       '<h1 class="hero" style="font-size:1.8rem">Documentação</h1>' +
       '<section><h2>Visão do projeto</h2><p>Plataforma educacional de jogos de Química em HTML, CSS e JavaScript puros, sem build e sem backend. Abra o <code>index.html</code> com duplo clique.</p></section>' +
-      '<section><h2>Nomeie a Molécula e Desafio da Entalpia</h2><p>Os dois jogos possuem 24 questões cada, três níveis de dificuldade e partidas de seis desafios. Cada acerto vale 100 pontos; com dica, 70. Após responder, confira a explicação e, ao terminar, revise sua partida. Os recordes ficam salvos neste navegador quando o armazenamento está disponível.</p></section>' +
+      '<section><h2>Jogos Disponíveis</h2><p>A plataforma conta com jogos interativos para diversas áreas da Química, incluindo <strong>Equilibre as Equações</strong> (Geral e Inorgânica) e <strong>Mistério das Misturas</strong> (Química Analítica), além dos quizzes interativos com níveis de dificuldade e estatísticas salvas localmente.</p></section>' +
       '<section><h2>Arquitetura em camadas</h2><ul>' +
         '<li><strong>Dados</strong> (<code>scripts/data/</code>): catálogo, reportagens, elementos e painel de pontuação.</li>' +
         '<li><strong>Domínio</strong> (<code>scripts/domain/</code>): contrato de jogo e validação.</li>' +
@@ -311,14 +326,13 @@
         '<li><strong>Jogos</strong> (<code>scripts/games/</code>): módulos independentes registrados na plataforma.</li></ul>' +
         '<p>Regra de dependência: Dados → Domínio → Aplicação → Jogos → Apresentação.</p></section>' +
       '<section><h2>Como adicionar um jogo</h2><ol>' +
-        '<li>Crie <code>scripts/games/seu-jogo.js</code> com metadados e função <code>render()</code>.</li>' +
+        '<li>Crie <code>scripts/games/seu-jogo.js</code> com metadados e função de renderização.</li>' +
         '<li>Registre com <code>QM.app.registrarJogo(metadados, render)</code>.</li>' +
         '<li>Adicione a tag <code>&lt;script&gt;</code> no <code>index.html</code> antes dos arquivos de apresentação.</li>' +
         '<li>Para o card do catálogo, adicione a entrada em <code>scripts/data/jogos-data.js</code> com a <code>rota</code>.</li></ol></section>' +
       '<section><h2>Como adicionar reportagens</h2><ol><li>Objeto novo em <code>scripts/data/reportagens-data.js</code> com id, tema (chave de <code>temasReportagens</code>), título, resumo, fonte e URL verificada.</li></ol></section>' +
       '<section><h2>Como adicionar elementos</h2><ol><li>Objeto novo em <code>scripts/data/elementos-data.js</code> com número, símbolo, nome, massa, grupo, período e categoria.</li></ol></section>' +
       '<section><h2>Uso offline e distribuição</h2><p>As partidas, as estruturas químicas e os diagramas funcionam sem internet. Fontes externas usam alternativas do sistema quando a conexão não está disponível. Os links de estudo e das reportagens exigem internet. Para levar a plataforma em um pendrive, copie a pasta inteira.</p></section>' +
-      '<section><h2>Recursos e próximas etapas</h2><p>Nomeie a Molécula e Desafio da Entalpia possuem partidas, dicas, correção, resultados e revisão. A plataforma também oferece reportagens com busca por assunto e uma tabela periódica com os 18 elementos dos períodos 1–3. Os demais jogos continuam nas etapas de desenvolvimento do grupo. O painel global de desempenho contém dados demonstrativos; os recordes reais desses dois jogos aparecem nos respectivos cartões.</p></section>' +
       '</div>';
   };
 })(window.QM = window.QM || {});
