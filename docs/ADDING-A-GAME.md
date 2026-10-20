@@ -1,3 +1,4 @@
+[ADDING-A-GAME.md](https://github.com/user-attachments/files/33722436/ADDING-A-GAME.md)
 # Como adicionar um novo jogo
 
 Este guia permite criar um jogo completo sem alterar navegação, layout
@@ -5,8 +6,8 @@ global ou o código dos outros jogos.
 
 ## Passo a passo
 
-1. **Crie o arquivo do jogo**: `scripts/games/meu-jogo.js`, copiando a
-   estrutura de `scripts/games/impostor.js` (IIFE + metadados + `render()`).
+1. **Crie o arquivo do jogo**: `scripts/games/meu-jogo.js`, copiando a estrutura de `scripts/games/nomeie-molecula.js` quando o jogo for um quiz
+   com níveis e questões, usando `QM.quiz.registrar()` para reaproveitar a interface.
 2. **Preencha os metadados** com todos os campos do contrato:
    `id` (único, sem espaços), `titulo`, `materia`, `topicos` (array),
    `dificuldade`, `descricao`, `rota` (`#/jogo/meu-jogo`).

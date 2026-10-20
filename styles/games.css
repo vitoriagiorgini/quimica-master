@@ -18,6 +18,14 @@
   overflow-wrap: break-word;
 }
 
+.qm-jogo.qm-tema-ambiental {
+  --qm-cor: #ff9800;
+  --qm-acao: #b45309;
+  --qm-acao-hover: #92400e;
+  --qm-fundo-tema: #fff7ed;
+  --qm-borda-tema: #fed7aa;
+}
+
 .qm-jogo.qm-tema-entalpia {
   --qm-cor: #9b51e0;
   --qm-acao: #6d28d9;
