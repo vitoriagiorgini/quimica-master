@@ -837,3 +837,32 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Investigação ambiental: reaproveita cores, fontes e estrutura dos demais jogos. */
+.qa-investigacao .qa-niveis,.qa-investigacao .qa-cartas{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:16px;margin:22px 0}
+.qa-investigacao .qa-nivel,.qa-investigacao .qa-carta{border:2px solid var(--qm-borda-tema);background:#fff;border-radius:14px;padding:18px;color:var(--qm-tinta)}
+.qa-investigacao .qa-nivel{text-align:left;cursor:pointer;font:inherit}
+.qa-investigacao .qa-nivel strong,.qa-investigacao .qa-nivel span{display:block}
+.qa-investigacao .qa-nivel span{font-size:.9rem;margin-top:8px}
+.qa-investigacao .qa-nivel.ativo{border-color:var(--qm-acao);background:var(--qm-fundo-tema)}
+.qa-investigacao .qa-painel{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:16px 20px;border-radius:14px;background:var(--qm-fundo-tema);border:1px solid var(--qm-borda-tema)}
+.qa-investigacao .qa-painel p{margin:4px 0 0}
+.qa-investigacao .qa-contadores{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-weight:700}
+.qa-investigacao .qa-contadores span{padding:8px 12px;border:1px solid var(--qm-borda-tema);border-radius:10px;background:white}
+.qa-investigacao .qa-carta{display:flex;flex-direction:column;min-height:390px;box-shadow:0 5px 0 var(--qm-borda-tema)}
+.qa-investigacao .qa-avatar{font-size:2.6rem;background:var(--qm-fundo-tema);border-radius:50%;width:76px;height:76px;display:grid;place-items:center;margin:0 auto 8px}
+.qa-investigacao .qa-carta h3{text-align:center;margin:0}
+.qa-investigacao .qa-topico{text-align:center;font-size:.8rem;color:var(--qm-suave);margin:3px 0 12px}
+.qa-investigacao .qa-afirmacao{font-weight:600;flex:1}
+.qa-investigacao .qa-acoes{display:grid;gap:8px;margin-top:auto}
+.qa-investigacao button{transition:filter .15s ease}
+.qa-investigacao button:hover{filter:brightness(.95)}
+.qa-investigacao .qa-acoes button,.qa-investigacao .qa-botao{padding:11px 12px;border:0;border-radius:9px;cursor:pointer;font:inherit;font-weight:700;background:var(--qm-acao);color:#fff}
+.qa-investigacao .qa-acoes button:first-child,.qa-investigacao .qa-acoes button:last-child,.qa-investigacao .qa-secundario{background:var(--qm-fundo-tema);color:var(--qm-acao);border:1px solid var(--qm-borda-tema)}
+.qa-investigacao .qa-dica,.qa-investigacao .qa-resultado{padding:12px;border-radius:10px;background:var(--qm-fundo-tema);font-size:.9rem}
+.qa-investigacao .qa-resultado p{margin:7px 0 0}
+.qa-investigacao .qa-impostor{border-color:#f59e0b}
+.qa-investigacao .qa-aliado{border-color:#16a34a}
+.qa-investigacao .qa-conclusao{text-align:center;padding:24px;margin-top:18px;border-radius:12px;background:var(--qm-fundo-tema)}
+.qa-investigacao .qa-conclusao .qa-botao{margin:6px}
+@media(max-width:600px){.qa-investigacao .qa-cartas{grid-template-columns:1fr}.qa-investigacao .qa-carta{min-height:0}}
