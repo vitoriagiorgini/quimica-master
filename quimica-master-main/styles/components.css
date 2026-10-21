@@ -1,0 +1,65 @@
+/* ============ APRESENTAÇÃO — COMPONENTES ============ */
+.botao-jogar { 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 8px; 
+  padding: 8px 20px; 
+  border-radius: 0.75rem; 
+  background: var(--cor-preto); 
+  color: #fff; 
+  font-weight: 600; 
+  font-size: 0.875rem; 
+  text-decoration: none; 
+  border: 2px solid transparent; 
+  cursor: pointer; 
+  transition: all 0.2s; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.botao-jogar:hover { transform: scale(1.02); background: #333; }
+.botao-jogar:active { transform: scale(0.98); }
+
+.botao-jogar.claro { background: #fff; color: #000; }
+.botao-jogar.claro:hover { background: #f3f4f6; }
+
+.botao-estatico, .botao-outline { 
+  display: inline-block; 
+  background: var(--cor-preto); 
+  color: #fff; 
+  border-radius: 0.5rem; 
+  padding: 6px 14px; 
+  font-size: 0.75rem; 
+  font-weight: 600; 
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.botao-estatico:hover, .botao-outline:hover { opacity: 0.85; }
+
+.chip { 
+  display: inline-block; 
+  padding: 4px 10px; 
+  border-radius: 0.375rem; 
+  font-size: 0.75rem; 
+  font-weight: 600; 
+  background: rgba(0, 0, 0, 0.1); 
+  color: inherit; 
+}
+.rotulo { font-size: 0.75rem; font-weight: 500; opacity: 0.7; display: block; margin-bottom: 4px; }
+
+/* Progress Ring (Donut do antigo para o anel novo) */
+.donut { 
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 3px solid rgba(0,0,0,0.15);
+  border-top-color: currentColor;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  background: transparent;
+}
+.donut::after { display: none; }
+/* Padrão unificado: todos os botões de jogar do catálogo são brancos. */
+.cartao-jogo .botao-jogar,
+.cartao-jogo .botao-jogar.claro { background: #fff; color: #111; border-color: rgba(17, 24, 39, 0.08); }
+.cartao-jogo .botao-jogar:hover,
+.cartao-jogo .botao-jogar.claro:hover { background: #f3f4f6; color: #111; }
