@@ -1,0 +1,250 @@
+/* ============ APRESENTAÇÃO — TOKENS, BASE E LAYOUT ============ */
+:root {
+  --cor-fundo: #f8fafc;
+  --cor-superficie: #ffffff;
+  --cor-texto: #111827;
+  --cor-texto-suave: #4b5563;
+  --cor-preto: #000000;
+  
+  /* Cores de cards do protótipo */
+  --cor-geral: #d9f99d; --borda-geral: #bef264;
+  --cor-organica: #38bdf8; --borda-organica: #0ea5e9;
+  --cor-fisico: #a855f7; --borda-fisico: #9333ea;
+  --cor-analitica: #fcd34d; --borda-analitica: #fbbf24;
+  --cor-bio: #f472b6; --borda-bio: #ec4899;
+  --cor-ambiental: #fb923c; --borda-ambiental: #f97316;
+
+  --raio: 1.25rem;
+  --sombra: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --sombra-forte: 0 12px 20px -5px rgba(0, 0, 0, 0.15);
+  --fonte-display: 'Clash Display', sans-serif;
+  --fonte-texto: 'Clash Display', sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: var(--fonte-texto); 
+  background: var(--cor-fundo); 
+  color: var(--cor-texto); 
+  line-height: 1.6; 
+  padding: 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+h1, h2, h3 { font-family: var(--fonte-display); line-height: 1.2; letter-spacing: -0.02em; }
+a { color: var(--cor-texto); }
+:focus-visible { outline: 3px solid #3b82f6; outline-offset: 2px; }
+
+.container { max-width: 1400px; margin: 0 auto; }
+main { min-height: 60vh; padding-bottom: 40px; }
+
+/* Cabeçalho flutuante */
+.cabecalho { position: sticky; top: 16px; z-index: 50; margin-bottom: 40px; }
+.cabecalho-inner { 
+  background: rgba(255, 255, 255, 0.8); 
+  backdrop-filter: blur(12px); 
+  -webkit-backdrop-filter: blur(12px); 
+  border-radius: 1.5rem; 
+  box-shadow: 0 4px 20px -5px rgba(0,0,0,0.05); 
+  border: 1px solid rgba(243, 244, 246, 0.5);
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  padding: 16px 24px; 
+}
+
+/* Cabeçalho: limitando o tamanho do ícone */
+.logo { 
+  font-weight: 700; 
+  font-size: 1.25rem; /* Fonte um pouco menor */
+  color: var(--cor-texto); 
+  text-decoration: none; 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  letter-spacing: -0.02em;
+}
+/* Trava o tamanho do ícone SVG ou FontAwesome no navbar */
+.logo svg, .logo i, .logo-icon svg, .logo-icon i {
+  width: 24px !important;
+  height: 24px !important;
+  font-size: 24px !important;
+  display: block;
+}
+.logo-icon {
+  background: #f3f4f6;
+  padding: 6px 8px; /* Padding reduzido */
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Rodapé: limitando o tamanho do ícone gigante */
+.logo-rodape { 
+  background: #f3f4f6; 
+  padding: 8px 16px; 
+  border-radius: 0.75rem; 
+  border: 1px solid #e5e7eb; 
+  font-weight: 700; 
+  font-size: 0.9rem;
+  color: #111827; 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+}
+/* Trava o tamanho do ícone SVG ou FontAwesome no rodapé */
+.logo-rodape svg, .logo-rodape i {
+  width: 18px !important;
+  height: 18px !important;
+  font-size: 18px !important;
+  display: block;
+}
+
+.navegacao { display: flex; gap: 4px; background: rgba(243, 244, 246, 0.8); padding: 6px; border-radius: 1rem; }
+.navegacao a { 
+  padding: 10px 24px; 
+  border-radius: 0.75rem; 
+  text-decoration: none; 
+  color: var(--cor-texto-suave); 
+  font-weight: 500; 
+  font-size: 0.875rem; 
+  transition: all 0.2s; 
+}
+.navegacao a.ativo { 
+  background: #fff; 
+  color: var(--cor-texto); 
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
+}
+.navegacao a:hover:not(.ativo) { color: var(--cor-texto); }
+
+/* Rodapé */
+.rodape { border-top: 1px solid #e5e7eb; padding-top: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 40px; }
+.rodape nav { display: flex; gap: 24px; font-size: 0.875rem; color: #6b7280; font-weight: 500; }
+.rodape nav a { text-decoration: none; color: inherit; transition: color 0.2s; }
+.rodape nav a:hover { color: #000; }
+.logo-rodape { background: #f3f4f6; padding: 10px 20px; border-radius: 0.75rem; border: 1px solid #e5e7eb; font-weight: 700; color: #111827; display: flex; align-items: center; gap: 8px; }
+
+@media (max-width: 768px) { 
+  .cabecalho-inner { flex-direction: column; gap: 16px; padding: 16px; } 
+  .navegacao { overflow-x: auto; max-width: 100%; }
+}
+
+/* ========================================================= */
+/* TRAVA DE SEGURANÇA GLOBAL PARA ÍCONES (FONT AWESOME)      */
+/* ========================================================= */
+svg.svg-inline--fa, 
+i[class^="fa-"], 
+i[class*=" fa-"] {
+  max-width: 1em;
+  max-height: 1em;
+  display: inline-block;
+}
+
+/* Forçando o tamanho correto para o ícone da logo no Navbar e Rodapé */
+header svg, header i,
+footer svg, footer i,
+.cabecalho svg, .cabecalho i,
+.logo svg, .logo i {
+  width: 24px !important;
+  height: 24px !important;
+  font-size: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
+}
+
+/* ============ CABEÇALHO E NAVEGAÇÃO FIXA ============ */
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.cabecalho-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;          /* evita o corte que você reclamou */
+  gap: 8px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+}
+
+/* --- Logo --- */
+.cabecalho .logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--fonte-display);
+  font-size: 2.4rem;      /* antes: 2rem — agora ~38px */
+  font-weight: 600;
+  color: #111827;
+  text-decoration: none;
+}
+
+/* Ícone PRETO, sem fundo azul nenhum */
+.cabecalho .logo svg {
+  background-color: transparent;   /* fundo azul sai */
+  color: #111827;                  /* ícone preto */
+  padding: 0;
+  border-radius: 0;
+  width: 44px;                     /* ícone maior */
+  height: 44px;
+  box-sizing: border-box;
+}
+
+/* --- Navegação --- */
+.navegacao {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.navegacao a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  color: #4b5563;
+  font-family: var(--fonte-texto);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.navegacao a svg {
+  width: 18px;
+  height: 18px;
+  color: #6b7280;
+}
+
+.navegacao a:hover {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+/* Aba ativa */
+.navegacao a.ativo {
+  background-color: #f0f9ff;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.navegacao a.ativo svg {
+  color: #0284c7;
+}
+
+@media (max-width: 640px) {
+  .cabecalho .logo { font-size: 1.9rem; }
+  .cabecalho .logo svg { width: 40px; height: 40px; }
+}
