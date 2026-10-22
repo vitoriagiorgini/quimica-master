@@ -53,6 +53,22 @@
   --qm-borda-tema: #fef08a;
 }
 
+.qm-jogo.qm-tema-bioquimica {
+  --qm-cor: #f48fb1;
+  --qm-acao: #be185d;
+  --qm-acao-hover: #9d174d;
+  --qm-fundo-tema: #fff1f7;
+  --qm-borda-tema: #fbcfe8;
+}
+
+.qm-jogo.qm-tema-geral {
+  --qm-cor: #d5f583;
+  --qm-acao: #4d7c0f;
+  --qm-acao-hover: #3f6212;
+  --qm-fundo-tema: #f7fee7;
+  --qm-borda-tema: #d9f99d;
+}
+
 .qm-jogo *,
 .qm-jogo *::before,
 .qm-jogo *::after {

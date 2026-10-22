@@ -12,9 +12,9 @@
     { id: 'nomeie-molecula', area: 'Química Orgânica', jogo: 'Nomeie a Molécula', tipo: 'Quiz visual', dificuldade: '3 níveis', topicos: ['Hidrocarbonetos', 'Grupos Funcionais', 'Nomenclatura'], pontuacaoDemo: null, bg: '#3FBDFC', texto: 'escuro', icone: 'molecula', rota: '#/jogo/nomeie-molecula' },
     { id: 'desafio-entalpia', area: 'Físico-Química', jogo: 'Desafio da Entalpia', tipo: 'Quiz e cálculo', dificuldade: '3 níveis', topicos: ['Termoquímica', 'Lei de Hess', 'Energia de ligação'], pontuacaoDemo: null, bg: '#9B51E0', texto: 'claro', icone: 'gota', rota: '#/jogo/desafio-entalpia' },
     { id: 'misterio-misturas', area: 'Química Analítica', jogo: 'Mistério das Misturas', tipo: 'Quiz de casos', dificuldade: '3 níveis', topicos: ['Classificação de misturas', 'Métodos de separação', 'Propriedades físicas'], pontuacaoDemo: null, bg: '#FDD835', texto: 'escuro', icone: 'erlenmeyer', rota: '#/jogo/misterio-misturas' },
-    { area: 'Bioquímica', jogo: 'Reconstrua a Proteína', tipo: 'Quiz', dificuldade: 'Médio', topicos: ['Proteínas', 'DNA/RNA'], pontuacaoDemo: 85, bg: '#F48FB1', texto: 'claro', icone: 'dna', rota: null },
+    { id: 'bioquimica', area: 'Bioquímica', jogo: 'Reconstrua a Proteína', tipo: 'Quiz ENEM', dificuldade: '3 níveis', topicos: ['Biomoléculas', 'Enzimas', 'Metabolismo'], pontuacaoDemo: null, bg: '#F48FB1', texto: 'claro', icone: 'dna', rota: '#/jogo/bioquimica' },
     { id: 'quimica-ambiental', area: 'Química Ambiental', jogo: 'Redução de Carbono', tipo: 'Quiz educativo', dificuldade: '3 níveis', topicos: ['Poluição e tratamento', 'Ciclos biogeoquímicos', 'Sustentabilidade'], pontuacaoDemo: null, bg: '#FF9800', texto: 'claro', icone: 'globo', rota: '#/jogo/quimica-ambiental', dica: 'Dica Rápida' },
-    { id: 'impostor', area: 'Química Geral', jogo: 'Encontre o Impostor', tipo: 'Quiz', dificuldade: 'Médio', topicos: ['Famílias químicas', 'Classificação dos elementos'], pontuacaoDemo: null, bg: '#6366F1', texto: 'claro', icone: 'impostor', rota: '#/jogo/impostor' }
+    { id: 'quimica-geral', area: 'Química Geral', jogo: 'Desafios de Química Geral', tipo: 'Quiz ENEM', dificuldade: '3 níveis', topicos: ['Matéria e propriedades', 'Estequiometria', 'Soluções', 'Eletroquímica'], pontuacaoDemo: null, bg: '#D5F583', texto: 'escuro', icone: 'atomo', rota: '#/jogo/quimica-geral' }
   ];
 
   QM.dados.painelPontuacao = {
@@ -48,6 +48,8 @@
       dificuldade: '3 níveis', 
       descricao: 'Investigue água, ar e solo, interprete processos ambientais e escolha soluções sustentáveis com base na química.', 
       rota: '#/jogo/quimica-ambiental' 
-    }
+    },
+    { id: 'bioquimica', titulo: 'Reconstrua a Proteína', materia: 'Bioquímica', topicos: ['Biomoléculas', 'Enzimas', 'Metabolismo energético'], dificuldade: '3 níveis', descricao: 'Revise biomoléculas e processos celulares com questões contextualizadas para o ENEM.', rota: '#/jogo/bioquimica' },
+    { id: 'quimica-geral', titulo: 'Desafios de Química Geral', materia: 'Química Geral', topicos: ['Matéria e propriedades', 'Estequiometria', 'Soluções', 'Eletroquímica'], dificuldade: '3 níveis', descricao: 'Pratique conceitos e situações-problema de Química Geral no estilo ENEM.', rota: '#/jogo/quimica-geral' }
   ];
 })(window.QM = window.QM || {});
